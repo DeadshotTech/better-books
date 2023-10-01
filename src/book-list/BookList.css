@@ -40,7 +40,7 @@
   height: 9rem;
   width: 9rem;
   /* Add effect to the image when hovered */
-  /* transition: all 0.5s ease-in-out; */
+  transition: all 0.5s ease-in-out;
   /* Remove margin to eliminate unnecessary space */
   margin: 0;
   /* Add rounded corners to the box only at the top */
@@ -48,9 +48,9 @@
 }
 
 /* Style for image hover */
-/* .book-card img:hover {
+.book-card img:hover {
   transform: scale(1.1);
-} */
+}
 
 /* Add styling to the book description div */
 .book-description {
