@@ -1,0 +1,11 @@
+.search {
+  justify-self: center;
+  border: none;
+  font-size: 1.8rem;
+  border-radius: 0.7rem;
+  width: 40rem;
+  transition: all 0.3s;
+  background-color: var(--color-background-100);
+  /* Set text color */
+  color: var(--color-text);
+}

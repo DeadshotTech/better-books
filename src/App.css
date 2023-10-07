@@ -13,14 +13,3 @@ body {
   /* Set background color of the page */
   background-color: var(--color-background-100);
 }
-
-.search {
-  justify-self: center;
-  border: none;
-  font-size: 1.8rem;
-  border-radius: 0.7rem;
-  width: 40rem;
-  transition: all 0.3s;
-  color: var(--color-text);
-  background-color: var(--color-primary);
-}

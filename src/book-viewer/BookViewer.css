@@ -1,0 +1,78 @@
+/* CSS for BookViewer component */
+.book-container {
+  text-align: center;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.page {
+  height: 297mm; /* A4 height */
+  padding: 20px;
+  display: flex;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.page-images {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr); /* Create 5 rows */
+  justify-items: center; /* Center horizontally within the grid */
+  gap: 10px; /* Add some spacing between grid items */
+  flex: 20%;
+}
+
+.image-container {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  width: 100%;
+}
+
+.image-container img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.image-container p {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.page-content {
+  height: 100%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  /* Added for dummy content. Should be removed after pdf rendering */
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex: 60%;
+}
+
+.navigation {
+  margin: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

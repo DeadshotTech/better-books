@@ -1,8 +1,9 @@
 import React from "react";
 
-import BookCard from "./BookCard";
+import BookCard from "../common/BookCard";
 
 import "./BookList.css";
+import { Link } from "react-router-dom";
 
 /** 
 Create a function called BookList which takes a prop called books. The prop books is an array of objects. Each object has the following shape:
@@ -19,8 +20,15 @@ function BookList({ books, onBookClick }) {
   return (
     <ul className="book-list">
       {books?.map((book, i) => (
-        <div className="list-item" key={i} onClick={() => onBookClick(book)}>
-          <BookCard book={book} index={i} />
+        <div className="list-item" key={i} onClick={() => onBookClick(book.id)}>
+          <Link to="/book-viewer">
+            <BookCard book={book} index={i}>
+              <div className="book-description">
+                <h2>{book.title}</h2>
+                <p>By {book.author}</p>
+              </div>
+            </BookCard>
+          </Link>
         </div>
       ))}
     </ul>
