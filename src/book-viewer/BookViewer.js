@@ -1,58 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Footer from "../footer/Footer";
 import NavBar from "../nav-bar/NavBar";
 
 import "./BookViewer.css";
 
-const bookData = {
-  pages: [
-    "Page 1 content goes here...",
-    "Page 2 content goes here...",
-    "Page 3 content goes here...",
-    // Add more pages as needed
-  ],
-  helperContent: [
-    {
-      left: [
-        {
-          imageUrl: "https://i.pravatar.cc/48?u=4994763",
-          description:
-            "Description of the first explanatory message. This can be a video.",
-        },
-        {},
-        {
-          imageUrl: "https://i.pravatar.cc/48?u=4994763",
-          description:
-            "Description of the first explanatory message. This can be a video.",
-        },
-      ],
-      right: [
-        {},
-        {
-          imageUrl: "https://i.pravatar.cc/48?u=4994763",
-          description:
-            "Description of the first explanatory message. This can be a video.",
-        },
-        {
-          imageUrl: "https://i.pravatar.cc/48?u=4994763",
-          description:
-            "Description of the first explanatory message. This can be a video.",
-        },
-      ],
-    },
-    { left: [], right: [] },
-    { left: [], right: [] },
-  ],
-};
+import { bookData, bookText } from "../configs/InitialValues";
+import BookPaginator from "./BookPaginator";
+import PageHelperContent from "./PageHelperContent";
 
 export default function BookViewer({ book }) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    // Split text into pages
+    const charsPerPage = 1000; // Maximum characters per page
+    const newPages = [];
+    let remainingText = bookText;
+    while (remainingText.length > 0) {
+      let endIndex = charsPerPage;
+      // Find the last paragraph break before charsPerPage
+      if (remainingText.length > charsPerPage) {
+        endIndex = remainingText.lastIndexOf("\n", charsPerPage);
+      }
+      // Add the page and remove it from remainingText
+      newPages.push(remainingText.slice(0, endIndex).trim());
+      remainingText = remainingText.slice(endIndex).trim();
+    }
+    setPages(newPages);
+  }, [book]);
 
   if (!book) return;
 
   const goToNextPage = () => {
-    if (currentPage < bookData.pages.length - 1) {
+    if (currentPage < pages.length - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -69,55 +51,29 @@ export default function BookViewer({ book }) {
         <span>📚 {book.title}</span>
       </NavBar>
       <div className="book-container">
-        <div className="navigation">
-          <button onClick={goToPreviousPage} disabled={currentPage === 0}>
-            Previous Page
-          </button>
-          <button
-            onClick={goToNextPage}
-            disabled={currentPage === bookData.pages.length - 1}
-          >
-            Next Page
-          </button>
-        </div>
+        <BookPaginator
+          onPreviousClick={goToPreviousPage}
+          onNextClick={goToNextPage}
+          currentPage={currentPage}
+          dataLength={pages.length}
+        />
         <div className="page">
-          <div className="page-images">
-            <div className="image-container">
-              <img src="https://i.pravatar.cc/48?u=4994763" alt="Left" />
-              <p>Left Image Text</p>
-            </div>
-            <div className="image-container"></div>
-            <div className="image-container">
-              <img src="https://i.pravatar.cc/48?u=4994763" alt="Right" />
-              <p>Right Image Text</p>
-            </div>
-          </div>
+          <PageHelperContent
+            helperContent={bookData?.pages[currentPage]?.helperContent?.left}
+          />
           <div className="page-content">
-            <p>{bookData.pages[currentPage]}</p>
+            <p>{pages[currentPage]}</p>
           </div>
-          <div className="page-images">
-            <div className="image-container"></div>
-            <div className="image-container">
-              <img src="https://i.pravatar.cc/48?u=4994763" alt="Left" />
-              <p>Left Image Text</p>
-            </div>
-            <div className="image-container">
-              <img src="https://i.pravatar.cc/48?u=4994763" alt="Right" />
-              <p>Right Image Text</p>
-            </div>
-          </div>
+          <PageHelperContent
+            helperContent={bookData?.pages[currentPage]?.helperContent?.right}
+          />
         </div>
-        <div className="navigation">
-          <button onClick={goToPreviousPage} disabled={currentPage === 0}>
-            Previous Page
-          </button>
-          <button
-            onClick={goToNextPage}
-            disabled={currentPage === bookData.pages.length - 1}
-          >
-            Next Page
-          </button>
-        </div>
+        <BookPaginator
+          onPreviousClick={goToPreviousPage}
+          onNextClick={goToNextPage}
+          currentPage={currentPage}
+          dataLength={pages.length}
+        />
       </div>
       <Footer />
     </div>
